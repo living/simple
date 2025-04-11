@@ -1,5 +1,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Test" ToolsVersion="4.0">
   <PropertyGroup>
+	<GenerateResourceMSBuildArchitecture>CurrentArchitecture</GenerateResourceMSBuildArchitecture>
+    <GenerateResourceMSBuildRuntime>CurrentRuntime</GenerateResourceMSBuildRuntime>
     <LibDir>lib\</LibDir>
 
     <RootDir>$(MSBuildProjectDirectory)\</RootDir>
