@@ -55,10 +55,14 @@
   <Target Name="GenerateAssemblyInfo" DependsOnTargets="GenerateTag">
     <Message Text="Product version: "/>
     <Message Text="##teamcity[buildNumber '$(ProductVersionBase).$(ProductVersionBuild)']"/>
-
-	<GitLastCommit Path=".">
-		<Output TaskParameter="CommitHash" PropertyName="LastCommitHash" />
-	</GitLastCommit>
+	
+	<Exec Command="git rev-parse HEAD" ConsoleToMSBuild="true" IgnoreExitCode="true" ContinueOnError="true">
+		<Output TaskParameter="ConsoleOutput" PropertyName="LastCommitHash" />
+	</Exec>
+	<!-- Se o comando falhar, atribua um valor padrão -->
+	<PropertyGroup>
+		<LastCommitHash Condition="'$(LastCommitHash)' == ''">unknown-commit</LastCommitHash>
+	</PropertyGroup>
 	
     <WriteLinesToFile File="$(SourceDir)\Version.cs"
                       Lines="namespace Simple { class VersionName { public const string Text = &quot;$(ProductBuildName)&quot;%3B public const string LastCommit = &quot;$(LastCommitHash)&quot;%3B } }" Overwrite="true" />
